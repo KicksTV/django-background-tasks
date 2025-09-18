@@ -10,6 +10,8 @@ task_failed = django.dispatch.Signal(['task_id', 'completed_task'])
 task_successful = django.dispatch.Signal(['task_id', 'completed_task'])
 task_started = django.dispatch.Signal()
 task_finished = django.dispatch.Signal()
+task_deleted = django.dispatch.Signal(['task'])
+
 
 
 # Register an event to reset saved queries when a Task is started.
