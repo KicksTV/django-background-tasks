@@ -16,8 +16,7 @@ from six import python_2_unicode_compatible
 
 from background_task.exceptions import InvalidTaskError
 from background_task.settings import app_settings
-from background_task.signals import task_failed
-from background_task.signals import task_rescheduled
+from background_task.signals import task_failed, task_rescheduled, task_deleted
 
 
 logger = logging.getLogger(__name__)
@@ -325,6 +324,10 @@ class Task(models.Model):
         # force NULL rather than empty string
         self.locked_by = self.locked_by or None
         return super(Task, self).save(*arg, **kw)
+
+    def delete(self, *arg, **kw):
+        task_deleted.send(sender=self.__class__, task=self)
+        return super(Task, self).delete(*arg, **kw)
 
     def __str__(self):
         return u'{}'.format(self.verbose_name or self.task_name)
