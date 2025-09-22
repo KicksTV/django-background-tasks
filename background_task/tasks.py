@@ -305,6 +305,7 @@ def autodiscover():
     """
     Autodiscover tasks.py files in much the same way as admin app
     """
+    from importlib import import_module
     from django.conf import settings
 
     for app in settings.INSTALLED_APPS:
