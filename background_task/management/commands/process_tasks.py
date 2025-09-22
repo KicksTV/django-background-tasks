@@ -64,7 +64,7 @@ class Command(BaseCommand):
         }),
         (('--max-run-time', ), {
             'action': 'store_true',
-            'type': int,
+            # 'type': int,
             'default': 0,
             'dest': 'max_run_time',
             'help': 'How long should a task run for before it is unlocked?',
