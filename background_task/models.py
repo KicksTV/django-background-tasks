@@ -34,6 +34,13 @@ class TaskQuerySet(models.QuerySet):
             creator_object_id=creator.id,
         )
 
+    def delete(self):
+        from django.db.models.deletion import Collector
+        del_query = self._chain()
+        for task in del_query:
+            task_deleted.send(sender=self.__class__, task=task)
+        return super(TaskQuerySet, self).delete()
+
 
 class TaskManager(models.Manager):
 
