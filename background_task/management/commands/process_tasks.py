@@ -7,7 +7,7 @@ import time
 from django import VERSION
 from django.core.management.base import BaseCommand
 from django.utils import autoreload
-
+from background_task.settings import app_settings
 from background_task.tasks import tasks, autodiscover
 from background_task.utils import SignalManager
 from django.db import close_old_connections as close_connection
@@ -62,6 +62,13 @@ class Command(BaseCommand):
             'dest': 'dev',
             'help': 'Auto-reload your code on changes. Use this only for development',
         }),
+        (('--max-run-time', ), {
+            'action': 'store_true',
+            'type': int,
+            'default': 0,
+            'dest': 'max_run_time',
+            'help': 'How long should a task run for before it is unlocked?',
+        }),
     )
 
     if VERSION < (1, 8):
@@ -84,7 +91,10 @@ class Command(BaseCommand):
         queue = options.get('queue', None)
         log_std = options.get('log_std', False)
         is_dev = options.get('dev', False)
+        max_run_time = options.get('max_run_time', 0)
         sig_manager = self.sig_manager
+
+        app_settings.BACKGROUND_TASK_MAX_RUN_TIME = max_run_time
 
         if is_dev:
             # raise last Exception is exist
