@@ -8,6 +8,7 @@ from django import VERSION
 from django.core.management.base import BaseCommand
 from django.utils import autoreload
 from background_task.settings import app_settings
+from django.conf import settings
 from background_task.tasks import tasks, autodiscover
 from background_task.utils import SignalManager
 from django.db import close_old_connections as close_connection
@@ -94,7 +95,7 @@ class Command(BaseCommand):
         max_run_time = options.get('max_run_time', 0)
         sig_manager = self.sig_manager
 
-        app_settings.BACKGROUND_TASK_MAX_RUN_TIME = max_run_time
+        # settings.configure(BACKGROUND_TASK_MAX_RUN_TIME=max_run_time)
 
         if is_dev:
             # raise last Exception is exist
