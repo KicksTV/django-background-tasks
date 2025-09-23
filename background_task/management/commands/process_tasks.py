@@ -47,6 +47,13 @@ class Command(BaseCommand):
             'default': 5.0,
             'help': 'Sleep for this many seconds before checking for new tasks (if none were found) - default is 5',
         }),
+        (('--max-run-time', ), {
+            'action': 'store',
+            'type': int,
+            'default': 0,
+            'dest': 'max_run_time',
+            'help': 'How long should a task run for before it is unlocked?',
+        }),
         (('--queue', ), {
             'action': 'store',
             'dest': 'queue',
@@ -61,13 +68,6 @@ class Command(BaseCommand):
             'action': 'store_true',
             'dest': 'dev',
             'help': 'Auto-reload your code on changes. Use this only for development',
-        }),
-        (('--max-run-time', ), {
-            'action': 'store_true',
-            'type': int,
-            'default': 0,
-            'dest': 'max_run_time',
-            'help': 'How long should a task run for before it is unlocked?',
         }),
     )
 
