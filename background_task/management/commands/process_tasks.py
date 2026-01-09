@@ -94,7 +94,7 @@ class Command(BaseCommand):
         max_run_time = options.get('max_run_time', 0)
         sig_manager = self.sig_manager
 
-        app_settings.BACKGROUND_TASK_MAX_RUN_TIME = max_run_time
+        # app_settings.BACKGROUND_TASK_MAX_RUN_TIME = max_run_time
 
         if is_dev:
             # raise last Exception is exist
